@@ -1,0 +1,2238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bro 2 Bro | Built on Support</title>
+    <link rel="preconnect" href="[fonts.googleapis.com](https://fonts.googleapis.com)">
+    <link rel="preconnect" href="[fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
+    <link href="[fonts.googleapis.com](https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap)" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0a0a0a;
+            --dark: #111111;
+            --dark-gray: #1a1a1a;
+            --medium-gray: #2a2a2a;
+            --accent-gray: #3a3a3a;
+            --light-gray: #888888;
+            --off-white: #e5e5e5;
+            --white: #ffffff;
+            --transition: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--black);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Typography */
+        .serif {
+            font-family: 'Playfair Display', Georgia, serif;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 400;
+            letter-spacing: -0.02em;
+        }
+
+        /* Utility Classes */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 clamp(24px, 5vw, 80px);
+        }
+
+        .container-narrow {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 clamp(24px, 5vw, 80px);
+        }
+
+        .text-center { text-align: center; }
+        .text-light { color: var(--light-gray); }
+        .text-off-white { color: var(--off-white); }
+
+        .mt-1 { margin-top: 0.5rem; }
+        .mt-2 { margin-top: 1rem; }
+        .mt-3 { margin-top: 1.5rem; }
+        .mt-4 { margin-top: 2rem; }
+        .mt-6 { margin-top: 3rem; }
+        .mt-8 { margin-top: 4rem; }
+
+        .mb-2 { margin-bottom: 1rem; }
+        .mb-4 { margin-bottom: 2rem; }
+        .mb-6 { margin-bottom: 3rem; }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 24px 0;
+            transition: all 0.4s var(--transition);
+        }
+
+        .nav.scrolled {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 16px 0;
+            border-bottom: 1px solid var(--dark-gray);
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            color: var(--white);
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo:hover {
+            opacity: 0.8;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--off-white);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--white);
+            transition: width 0.3s var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--white);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: var(--white);
+        }
+
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .mobile-toggle span {
+            width: 24px;
+            height: 1.5px;
+            background: var(--white);
+            transition: all 0.3s ease;
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--black);
+            z-index: 999;
+            padding: 100px 40px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s var(--transition);
+        }
+
+        .mobile-nav.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-nav-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .mobile-nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            transition: opacity 0.3s ease;
+        }
+
+        .mobile-nav-links a:hover {
+            opacity: 0.6;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 120px 0;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 900px;
+        }
+
+        .hero-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--light-gray);
+            margin-bottom: 32px;
+            opacity: 0;
+            animation: fadeInUp 1s var(--transition) 0.2s forwards;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 10vw, 7rem);
+            font-weight: 400;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 32px;
+            opacity: 0;
+            animation: fadeInUp 1s var(--transition) 0.4s forwards;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--light-gray);
+            max-width: 600px;
+            margin: 0 auto 48px;
+            line-height: 1.7;
+            font-weight: 300;
+            opacity: 0;
+            animation: fadeInUp 1s var(--transition) 0.6s forwards;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+            opacity: 0;
+            animation: fadeInUp 1s var(--transition) 0.8s forwards;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 48px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            opacity: 0;
+            animation: fadeIn 1s var(--transition) 1.2s forwards;
+        }
+
+        .scroll-indicator span {
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--light-gray);
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--light-gray), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 40px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.4s var(--transition);
+        }
+
+        .btn-primary {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        .btn-primary:hover {
+            background: var(--off-white);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--white);
+            border: 1px solid var(--accent-gray);
+        }
+
+        .btn-outline:hover {
+            background: var(--white);
+            color: var(--black);
+            border-color: var(--white);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--white);
+            padding: 12px 0;
+            border-bottom: 1px solid var(--accent-gray);
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--white);
+        }
+
+        /* Sections */
+        .section {
+            padding: clamp(80px, 12vw, 160px) 0;
+        }
+
+        .section-dark {
+            background: var(--dark);
+        }
+
+        .section-darker {
+            background: var(--dark-gray);
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--light-gray);
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 400;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            margin-bottom: 24px;
+        }
+
+        .section-subtitle {
+            font-size: clamp(1rem, 1.5vw, 1.125rem);
+            color: var(--light-gray);
+            max-width: 600px;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        /* Mission Section */
+        .mission-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            margin-top: 80px;
+        }
+
+        .mission-content p {
+            color: var(--off-white);
+            font-size: 1.125rem;
+            line-height: 1.8;
+            margin-bottom: 24px;
+            font-weight: 300;
+        }
+
+        .mission-visual {
+            position: relative;
+            aspect-ratio: 4/5;
+            background: var(--dark-gray);
+            overflow: hidden;
+        }
+
+        .mission-visual::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--medium-gray) 0%, var(--dark-gray) 100%);
+        }
+
+        .mission-visual::after {
+            content: 'B2B';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            color: var(--accent-gray);
+            opacity: 0.5;
+        }
+
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-top: 80px;
+            padding-top: 80px;
+            border-top: 1px solid var(--dark-gray);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 400;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--light-gray);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* Community Section */
+        .community-intro {
+            max-width: 700px;
+            margin: 0 auto 80px;
+            text-align: center;
+        }
+
+        .community-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .community-card {
+            background: var(--dark-gray);
+            padding: 48px;
+            border: 1px solid var(--medium-gray);
+            transition: all 0.4s var(--transition);
+        }
+
+        .community-card:hover {
+            border-color: var(--accent-gray);
+            transform: translateY(-4px);
+        }
+
+        .community-card-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--accent-gray);
+        }
+
+        .community-card-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--white);
+        }
+
+        .community-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+
+        .community-card p {
+            color: var(--light-gray);
+            font-size: 0.9375rem;
+            line-height: 1.7;
+        }
+
+        /* Growth Categories */
+        .growth-section {
+            padding: clamp(80px, 12vw, 160px) 0;
+            background: var(--dark);
+        }
+
+        .growth-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .growth-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2px;
+            background: var(--medium-gray);
+        }
+
+        .growth-item {
+            background: var(--dark);
+            padding: 48px 32px;
+            text-align: center;
+            transition: all 0.4s var(--transition);
+            cursor: pointer;
+        }
+
+        .growth-item:hover {
+            background: var(--dark-gray);
+        }
+
+        .growth-item:hover .growth-icon {
+            transform: scale(1.1);
+        }
+
+        .growth-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--accent-gray);
+            transition: transform 0.4s var(--transition);
+        }
+
+        .growth-icon svg {
+            width: 28px;
+            height: 28px;
+            stroke: var(--white);
+        }
+
+        .growth-item h3 {
+            font-size: 1.125rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            margin-bottom: 12px;
+        }
+
+        .growth-item p {
+            font-size: 0.875rem;
+            color: var(--light-gray);
+            line-height: 1.6;
+        }
+
+        /* Products Section */
+        .products-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .product-card {
+            background: var(--dark-gray);
+            transition: all 0.4s var(--transition);
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .product-card:hover .product-image {
+            opacity: 0.8;
+        }
+
+        .product-image {
+            aspect-ratio: 1;
+            background: var(--medium-gray);
+            position: relative;
+            overflow: hidden;
+            transition: opacity 0.4s var(--transition);
+        }
+
+        .product-image::after {
+            content: 'B2B';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--accent-gray);
+        }
+
+        .product-info {
+            padding: 24px;
+        }
+
+        .product-name {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .product-price {
+            color: var(--light-gray);
+            font-size: 0.9375rem;
+        }
+
+        /* Journal Preview */
+        .journal-section {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .journal-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .journal-content .section-label {
+            color: var(--light-gray);
+        }
+
+        .journal-features {
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .journal-feature {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .journal-feature-icon {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+            margin-top: 4px;
+        }
+
+        .journal-feature-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: var(--white);
+        }
+
+        .journal-feature-text h4 {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .journal-feature-text p {
+            font-size: 0.875rem;
+            color: var(--light-gray);
+        }
+
+        .journal-visual {
+            position: relative;
+        }
+
+        .journal-mockup {
+            aspect-ratio: 3/4;
+            background: var(--dark-gray);
+            border: 1px solid var(--medium-gray);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .journal-mockup::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, var(--medium-gray) 0%, var(--dark-gray) 100%);
+        }
+
+        .journal-mockup-content {
+            position: absolute;
+            inset: 32px;
+            border: 1px solid var(--accent-gray);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 24px;
+        }
+
+        .journal-mockup-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .journal-mockup-subtitle {
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--light-gray);
+        }
+
+        /* Waitlist Section */
+        .waitlist-section {
+            background: var(--dark-gray);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .waitlist-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--medium-gray), transparent);
+        }
+
+        .waitlist-content {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .waitlist-form {
+            margin-top: 48px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-input {
+            flex: 1;
+            padding: 18px 24px;
+            background: var(--dark);
+            border: 1px solid var(--medium-gray);
+            color: var(--white);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input::placeholder {
+            color: var(--light-gray);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--white);
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 18px 40px;
+            background: var(--white);
+            color: var(--black);
+            border: none;
+            font-family: inherit;
+            font-size: 0.875rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.4s var(--transition);
+        }
+
+        .form-submit:hover {
+            background: var(--off-white);
+            transform: translateY(-2px);
+        }
+
+        .form-note {
+            margin-top: 24px;
+            font-size: 0.8125rem;
+            color: var(--light-gray);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--black);
+            padding: 80px 0 40px;
+            border-top: 1px solid var(--dark-gray);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 80px;
+        }
+
+        .footer-brand .logo {
+            font-size: 1.75rem;
+            display: inline-block;
+            margin-bottom: 24px;
+        }
+
+        .footer-tagline {
+            color: var(--light-gray);
+            font-size: 0.9375rem;
+            line-height: 1.7;
+            max-width: 280px;
+        }
+
+        .footer-column h4 {
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--light-gray);
+            margin-bottom: 24px;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .footer-links a {
+            color: var(--off-white);
+            text-decoration: none;
+            font-size: 0.9375rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 40px;
+            border-top: 1px solid var(--dark-gray);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-copyright {
+            font-size: 0.8125rem;
+            color: var(--light-gray);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-social a {
+            color: var(--light-gray);
+            transition: color 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            color: var(--white);
+        }
+
+        .footer-social svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Page Headers */
+        .page-header {
+            padding: 180px 0 100px;
+            text-align: center;
+            background: var(--dark);
+        }
+
+        .page-header .section-label {
+            margin-bottom: 32px;
+        }
+
+        .page-header .section-title {
+            margin-bottom: 24px;
+        }
+
+        .page-header .section-subtitle {
+            margin: 0 auto;
+        }
+
+        /* Mission Page */
+        .values-section {
+            padding: clamp(80px, 12vw, 160px) 0;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2px;
+            background: var(--medium-gray);
+            margin-top: 60px;
+        }
+
+        .value-item {
+            background: var(--black);
+            padding: 60px 48px;
+        }
+
+        .value-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--accent-gray);
+            margin-bottom: 24px;
+        }
+
+        .value-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+
+        .value-text {
+            color: var(--light-gray);
+            font-size: 0.9375rem;
+            line-height: 1.7;
+        }
+
+        /* Community Page */
+        .membership-tiers {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 60px;
+        }
+
+        .tier-card {
+            background: var(--dark-gray);
+            padding: 48px;
+            border: 1px solid var(--medium-gray);
+            transition: all 0.4s var(--transition);
+        }
+
+        .tier-card.featured {
+            border-color: var(--white);
+            position: relative;
+        }
+
+        .tier-card.featured::before {
+            content: 'Most Popular';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--white);
+            color: var(--black);
+            font-size: 0.6875rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 6px 16px;
+        }
+
+        .tier-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .tier-name {
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--light-gray);
+            margin-bottom: 16px;
+        }
+
+        .tier-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 8px;
+        }
+
+        .tier-price span {
+            font-size: 1rem;
+            color: var(--light-gray);
+        }
+
+        .tier-description {
+            color: var(--light-gray);
+            font-size: 0.9375rem;
+            margin-bottom: 32px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .tier-features {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .tier-features li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.9375rem;
+            color: var(--off-white);
+        }
+
+        .tier-features li::before {
+            content: '✓';
+            color: var(--white);
+            font-size: 0.75rem;
+        }
+
+        /* Journal Page */
+        .journal-entries {
+            display: grid;
+            gap: 2px;
+            background: var(--medium-gray);
+            margin-top: 60px;
+        }
+
+        .journal-entry {
+            background: var(--dark);
+            padding: 48px;
+            display: grid;
+            grid-template-columns: 120px 1fr auto;
+            gap: 40px;
+            align-items: center;
+            transition: background 0.3s ease;
+            cursor: pointer;
+        }
+
+        .journal-entry:hover {
+            background: var(--dark-gray);
+        }
+
+        .entry-date {
+            text-align: center;
+        }
+
+        .entry-day {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            line-height: 1;
+        }
+
+        .entry-month {
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--light-gray);
+            margin-top: 8px;
+        }
+
+        .entry-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+        }
+
+        .entry-content p {
+            color: var(--light-gray);
+            font-size: 0.9375rem;
+            line-height: 1.6;
+        }
+
+        .entry-category {
+            font-size: 0.6875rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--light-gray);
+            border: 1px solid var(--accent-gray);
+            padding: 8px 16px;
+        }
+
+        /* Shop Page */
+        .shop-filters {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: none;
+            border: none;
+            color: var(--light-gray);
+            font-family: inherit;
+            font-size: 0.875rem;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            padding: 8px 0;
+            position: relative;
+        }
+
+        .filter-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--white);
+            transition: width 0.3s var(--transition);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            color: var(--white);
+        }
+
+        .filter-btn.active::after {
+            width: 100%;
+        }
+
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        /* Contact Page */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            margin-top: 80px;
+        }
+
+        .contact-info h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 24px;
+        }
+
+        .contact-info p {
+            color: var(--light-gray);
+            margin-bottom: 40px;
+            line-height: 1.7;
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .contact-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--accent-gray);
+        }
+
+        .contact-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--white);
+        }
+
+        .contact-text {
+            font-size: 0.9375rem;
+            color: var(--off-white);
+        }
+
+        .contact-form {
+            background: var(--dark-gray);
+            padding: 48px;
+            border: 1px solid var(--medium-gray);
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--light-gray);
+            margin-bottom: 12px;
+        }
+
+        .form-textarea {
+            width: 100%;
+            padding: 18px 24px;
+            background: var(--dark);
+            border: 1px solid var(--medium-gray);
+            color: var(--white);
+            font-family: inherit;
+            font-size: 1rem;
+            resize: vertical;
+            min-height: 150px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--white);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s var(--transition);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .mission-grid,
+            .journal-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .shop-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 40px;
+            }
+
+            .membership-tiers {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-toggle {
+                display: flex;
+            }
+
+            .mobile-nav {
+                display: block;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .community-features {
+                grid-template-columns: 1fr;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
+            .shop-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .journal-entry {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .entry-date {
+                text-align: left;
+                display: flex;
+                align-items: baseline;
+                gap: 12px;
+            }
+
+            .entry-month {
+                margin-top: 0;
+            }
+
+            .form-row {
+                flex-direction: column;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .hero-cta .btn {
+                width: 100%;
+                max-width: 280px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .shop-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .growth-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Page Visibility */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <div class="container">
+            <div class="nav-inner">
+                <a href="#" class="logo" data-page="home">Bro 2 Bro</a>
+                <ul class="nav-links">
+                    <li><a href="#" data-page="home" class="active">Home</a></li>
+                    <li><a href="#" data-page="mission">Mission</a></li>
+                    <li><a href="#" data-page="community">Community</a></li>
+                    <li><a href="#" data-page="journal">Journal</a></li>
+                    <li><a href="#" data-page="shop">Shop</a></li>
+                    <li><a href="#" data-page="contact">Contact</a></li>
+                </ul>
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <ul class="mobile-nav-links">
+            <li><a href="#" data-page="home">Home</a></li>
+            <li><a href="#" data-page="mission">Mission</a></li>
+            <li><a href="#" data-page="community">Community</a></li>
+            <li><a href="#" data-page="journal">Journal</a></li>
+            <li><a href="#" data-page="shop">Shop</a></li>
+            <li><a href="#" data-page="contact">Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- HOME PAGE -->
+    <div class="page active" id="home">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <p class="hero-label">Brotherhood & Growth Community</p>
+                    <h1 class="hero-title serif">Built on Support.</h1>
+                    <p class="hero-subtitle">A brotherhood for men building better lives through discipline, accountability, business, fitness, mental strength, and real support.</p>
+                    <div class="hero-cta">
+                        <a href="#" class="btn btn-primary" data-page="community">Join the Brotherhood</a>
+                        <a href="#" class="btn btn-outline" data-page="mission">Our Mission</a>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <span>Scroll</span>
+                <div class="scroll-line"></div>
+            </div>
+        </section>
+
+        <!-- Mission Preview Section -->
+        <section class="section section-dark">
+            <div class="container">
+                <div class="mission-grid">
+                    <div class="mission-content fade-in">
+                        <p class="section-label">Our Purpose</p>
+                        <h2 class="section-title serif">More than clothing.</h2>
+                        <p>We started Bro 2 Bro because we believe every man deserves a space where he can be real. Where showing up matters more than showing off. Where your struggles become your strength when shared with brothers who understand.</p>
+                        <p>This isn't about motivation that fades. It's about building a foundation of support that lifts you up when life gets heavy—and celebrates with you when you break through.</p>
+                        <a href="#" class="btn btn-ghost mt-4" data-page="mission">Learn More</a>
+                    </div>
+                    <div class="mission-visual fade-in"></div>
+                </div>
+                <div class="stats fade-in">
+                    <div class="stat">
+                        <div class="stat-number">2,500+</div>
+                        <div class="stat-label">Brothers</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">47</div>
+                        <div class="stat-label">Countries</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">∞</div>
+                        <div class="stat-label">Support</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Community Section -->
+        <section class="section">
+            <div class="container">
+                <div class="community-intro fade-in">
+                    <p class="section-label">The Community</p>
+                    <h2 class="section-title serif">Real men. Real support.</h2>
+                    <p class="section-subtitle">Create your account. Share your story. Support your brothers. A space where your struggles, wins, businesses, and growth are welcomed.</p>
+                </div>
+                <div class="community-features">
+                    <div class="community-card fade-in">
+                        <div class="community-card-icon">
+                            <svg xmlns="[w3.org](http://www.w3.org/2000/svg)" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+                            </svg>
+                        </div>
+                        <h3>Share Your Story</h3>
+                        <p>Your journey matters. Share your wins, your struggles, and everything in between. No judgment—just brothers who get it.</p>
+                    </div>
+                    <div class="community-card fade-in">
+                        <div class="community-card-icon">
+                            <svg xmlns="[w3.org](http://www.w3.org/2000/svg)" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0M12 12.75h.008v.008H12v-.008z" />
+                            </svg>
+                        </div>
+                        <h3>Promote Your Business</h3>
+                        <p>Building something? Share it with brothers who want to support. Your hustle deserves visibility.</p>
+                    </div>
+                    <div class="community-card fade-in">
+                        <div class="community-card-icon">
+                            <svg xmlns="[w3.org](http://www.w3.org/2000/svg)" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+                            </svg>
+                        </div>
+                        <h3>Accountability Partners</h3>
+                        <p>Pair up with brothers who hold you to your word. When you say you'll do something, someone's watching.</p>
+                    </div>
+                    <div class="community-card fade-in">
+                        <div class="community-card-icon">
+                            <svg xmlns="[w3.org](http://www.w3.org/2000/svg)" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                            </svg>
+                        </div>
+                        <h3>Real Support</h3>
+                        <p>Life gets hard. When it does, you'll have brothers in your corner. Not just likes—real support.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Growth Categories -->
+        <section class="growth-section">
+            <div class="container">
+                <div class="growth-header fade-in">
+                    <p class="section-label">Growth Paths</p>
+                    <h2 class="section-title serif">Seven pillars of growth.</h2>
+                    <p class="section-subtitle" style="margin: 24px auto 0;">Master the areas that matter. Connect with brothers focused on the same goals.</p>
+                </div>
+                <div class="growth-grid">
+                    <div class="growth-item fade-in">
+                        <div class="growth-icon">
+                            <svg xmlns="[w3.org](http://www.w3.org/2000/svg)" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
+                            </svg>
+                        </div>
+                        <h3>Mindset</h3>
+                        <p>Mental strength starts here</p>
+                    </div>
+                    <div class="growth-item fade-in">
+                        <div class="growth-icon">
+                            <svg xmlns="[w3.org](http://www.w3.org/2000/svg)" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z" />
+                            </svg>
+                        </div>
+                        <h3>Fitness</h3>
+                        <p>Build the body, build the man</p>
+                    </div>
+                    <div class="growth-item fade-in">
+                        <div class="growth-icon">
+                            <svg xmlns="[w3.org](http://www.w3.org/2000/svg)" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" />
+                            </svg>
+                        </div>
+                        <h3>Finance</h3>
+                        <p>Wealth creation & freedom</p>
+                    </div>
+                    <div class="growth-item fade-in">
+                        <div class="growth-icon">
+                            <svg xmlns="[w3.org](http://www.w3.org/2000/svg)" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" />
+                            </svg>
+                        </div>
+                        <h3>Business</h3>
+                        <p>Build something that matters</p>
+                    </div>
+                    <div class="growth-item fade-in">
+                        <div class="growth-icon">
+                            <svg xmlns="[w3.org](http://www.w3.org/2000/svg)" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z" />
+                            </svg>
+                        </div>
+                        <h3>Skills</h3>
+                        <p>Learn. Develop. Master.</p>
+                    </div>
+                    <div class="growth-item fade-in">
+                        <div class="growth-icon">
+                            <svg xmlns="[w3.org](http://www.w3.org/2000/svg)" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                            </svg>
+                        </div>
+                        <h3>Fatherhood</h3>
+                        <p>Leading the next generation</p>
+                    </div>
+                    <div class="growth-item fade-in">
+                        <div class="growth-icon">
+                            <svg xmlns="[w3.org](http://www.w3.org/2000/svg)" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <h3>Accountability</h3>
+                        <p>Show up. Every single day.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Products -->
+        <section class="section">
+            <div class="container">
+                <div class="products-header fade-in">
+                    <div>
+                        <p class="section-label">The Collection</p>
+                        <h2 class="section-title serif">Wear the mission.</h2>
+                    </div>
+                    <a href="#" class="btn btn-ghost" data-page="shop">View All Products</a>
+                </div>
+                <div class="products-grid">
+                    <div class="product-card fade-in">
+                        <div class="product-image"></div>
+                        <div class="product-info">
+                            <h3 class="product-name">Brotherhood Tee — Black</h3>
+                            <p class="product-price">$45</p>
+                        </div>
+                    </div>
+                    <div class="product-card fade-in">
+                        <div class="product-image"></div>
+                        <div class="product-info">
+                            <h3 class="product-name">Built on Support Hoodie</h3>
+                            <p class="product-price">$85</p>
+                        </div>
+                    </div>
+                    <div class="product-card fade-in">
+                        <div class="product-image"></div>
+                        <div class="product-info">
+                            <h3 class="product-name">Show Up Cap</h3>
+                            <p class="product-price">$35</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Journal Preview -->
+        <section class="section section-dark journal-section">
+            <div class="container">
+                <div class="journal-grid">
+                    <div class="journal-content fade-in">
+                        <p class="section-label">Brotherhood Journal</p>
+                        <h2 class="section-title serif">Stories from the brotherhood.</h2>
+                        <p class="section-subtitle">Raw. Real. Unfiltered. Brothers share their journeys—the breakthroughs, the breakdowns, and everything in between.</p>
+                        <div class="journal-features">
+                            <div class="journal-feature">
+                                <div class="journal-feature-icon">
+                                    <svg xmlns="[w3.org](http://www.w3.org/2000/svg)" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                                    </svg>
+                                </div>
+                                <div class="journal-feature-text">
+                                    <h4>Weekly Reflections</h4>
+                                    <p>Brothers share wins and lessons every week</p>
+                                </div>
+                            </div>
+                            <div class="journal-feature">
+                                <div class="journal-feature-icon">
+                                    <svg xmlns="[w3.org](http://www.w3.org/2000/svg)" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+                                    </svg>
+                                </div>
+                                <div class="journal-feature-text">
+                                    <h4>Breakthrough Stories</h4>
+                                    <p>How brothers pushed through their limits</p>
+                                </div>
+                            </div>
+                            <div class="journal-feature">
+                                <div class="journal-feature-icon">
+                                    <svg xmlns="[w3.org](http://www.w3.org/2000/svg)" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+                                    </svg>
+                                </div>
+                                <div class="journal-feature-text">
+                                    <h4>Growth Guides</h4>
+                                    <p>Practical wisdom from the trenches</p>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#" class="btn btn-outline mt-6" data-page="journal">Read the Journal</a>
+                    </div>
+                    <div class="journal-visual fade-in">
+                        <div class="journal-mockup">
+                            <div class="journal-mockup-content">
+                                <div class="journal-mockup-title">Brotherhood Journal</div>
+                                <div class="journal-mockup-subtitle">Volume One</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Waitlist Section -->
+        <section class="section waitlist-section">
+            <div class="container">
+                <div class="waitlist-content fade-in">
+                    <p class="section-label">Join the Movement</p>
+                    <h2 class="section-title serif">Ready to join the brotherhood?</h2>
+                    <p class="section-subtitle" style="margin: 0 auto;">Be first to know when we open doors. Early members get exclusive access to founder conversations and lifetime benefits.</p>
+                    <form class="waitlist-form">
+                        <div class="form-row">
+                            <input type="text" class="form-input" placeholder="First Name" required>
+                            <input type="text" class="form-input" placeholder="Last Name" required>
+                        </div>
+                        <input type="email" class="form-input" style="width: 100%; margin-bottom: 16px;" placeholder="Email Address" required>
+                        <button type="submit" class="form-submit">Join the Waitlist</button>
+                    </form>
+                    <p class="form-note">No spam. Just brotherhood updates.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- MISSION PAGE -->
+    <div class="page" id="mission">
+        <div class="page-header">
+            <div class="container">
+                <p class="section-label">Our Mission</p>
+                <h1 class="section-title serif">Built on Support.<br>For the Ones Who Show Up.</h1>
+                <p class="section-subtitle">We believe every man deserves brotherhood. Not networking. Not transactions. Real, unconditional support.</p>
+            </div>
+        </div>
+
+        <section class="section">
+            <div class="container-narrow">
+                <div class="fade-in" style="margin-bottom: 80px;">
+                    <h2 class="section-title serif" style="font-size: 2rem; margin-bottom: 24px;">Why we exist</h2>
+                    <p style="color: var(--off-white); font-size: 1.125rem; line-height: 1.8; margin-bottom: 24px;">Men are struggling. The statistics are clear—rising rates of isolation, depression, and disconnection. But behind every statistic is a man who feels alone in his battle.</p>
+                    <p style="color: var(--off-white); font-size: 1.125rem; line-height: 1.8; margin-bottom: 24px;">We started Bro 2 Bro because we've been there. We know what it's like to put on a brave face while falling apart inside. To succeed publicly while struggling privately. To have a thousand connections but no one to call at 2 AM.</p>
+                    <p style="color: var(--off-white); font-size: 1.125rem; line-height: 1.8;">This isn't about being weak. It's about being real. And when men get real with each other, everything changes.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="values-section section-dark">
+            <div class="container">
+                <div class="text-center fade-in" style="margin-bottom: 40px;">
+                    <p class="section-label">Our Values</p>
+                    <h2 class="section-title serif">What we stand for</h2>
+                </div>
+                <div class="values-grid">
+                    <div class="value-item fade-in">
+                        <div class="value-number">01</div>
+                        <h3 class="value-title">Radical Honesty</h3>
+                        <p class="value-text">No masks. No performances. We create space for men to be completely honest—with themselves and each other.</p>
+                    </div>
+                    <div class="value-item fade-in">
+                        <div class="value-number">02</div>
+                        <h3 class="value-title">Unconditional Support</h3>
+                        <p class="value-text">Your brothers show up. Period. Not when it's convenient. Not when you're winning. Always.</p>
+                    </div>
+                    <div class="value-item fade-in">
+                        <div class="value-number">03</div>
+                        <h3 class="value-title">Relentless Growth</h3>
+                        <p class="value-text">Comfort is the enemy. We push each other to become the men we're capable of being—in every area of life.</p>
+                    </div>
+                    <div class="value-item fade-in">
+                        <div class="value-number">04</div>
+                        <h3 class="value-title">Accountability</h3>
+                        <p class="value-text">Your word means something here. When you commit, you follow through. Your brothers hold you to it.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- COMMUNITY PAGE -->
+    <div class="page" id="community">
+        <div class="page-header">
+            <div class="container">
+                <p class="section-label">The Community</p>
+                <h1 class="section-title serif">Your brotherhood awaits.</h1>
+                <p class="section-subtitle">A private community where men connect, share, and grow together. Create your account and find your brothers.</p>
+            </div>
+        </div>
+
+        <section class="section">
+            <div class="container">
+                <div class="text-center fade-in" style="max-width: 700px; margin: 0 auto 60px;">
+                    <h2 class="section-title serif" style="font-size: 2rem;">Choose your level</h2>
+                    <p class="section-subtitle" style="margin: 24px auto 0;">Every level includes community access. Choose the depth of support that fits your journey.</p>
+                </div>
+                <div class="membership-tiers">
+                    <div class="tier-card fade-in">
+                        <div class="tier-name">Brother</div>
+                        <div class="tier-price">Free</div>
+                        <p class="tier-description">Join the community and connect with brothers worldwide.</p>
+                        <ul class="tier-features">
+                            <li>Community access</li>
+                            <li>Share your story</li>
+                            <li>Support other brothers</li>
+                            <li>Growth category groups</li>
+                            <li>Weekly digest</li>
+                        </ul>
+                        <a href="#" class="btn btn-outline" style="width: 100%;">Join Free</a>
+                    </div>
+                    <div class="tier-card featured fade-in">
+                        <div class="tier-name">Inner Circle</div>
+                        <div class="tier-price">$29<span>/month</span></div>
+                        <p class="tier-description">Deeper connections with accountability and mentorship.</p>
+                        <ul class="tier-features">
+                            <li>Everything in Brother</li>
+                            <li>Accountability partner matching</li>
+                            <li>Monthly group calls</li>
+                            <li>Private challenges</li>
+                            <li>Business spotlight features</li>
+                            <li>Early product access</li>
+                        </ul>
+                        <a href="#" class="btn btn-primary" style="width: 100%;">Join Inner Circle</a>
+                    </div>
+                    <div class="tier-card fade-in">
+                        <div class="tier-name">Founding Brother</div>
+                        <div class="tier-price">$99<span>/month</span></div>
+                        <p class="tier-description">Direct access to founders and exclusive experiences.</p>
+                        <ul class="tier-features">
+                            <li>Everything in Inner Circle</li>
+                            <li>1-on-1 founder access</li>
+                            <li>Quarterly retreats</li>
+                            <li>Lifetime founding status</li>
+                            <li>Business promotion</li>
+                            <li>Exclusive merchandise</li>
+                        </ul>
+                        <a href="#" class="btn btn-outline" style="width: 100%;">Become a Founder</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- JOURNAL PAGE -->
+    <div class="page" id="journal">
+        <div class="page-header">
+            <div class="container">
+                <p class="section-label">Brotherhood Journal</p>
+                <h1 class="section-title serif">Stories from the brotherhood.</h1>
+                <p class="section-subtitle">Raw, real stories from brothers in the trenches. No filters. No perfection. Just truth.</p>
+            </div>
+        </div>
+
+        <section class="section">
+            <div class="container">
+                <div class="journal-entries">
+                    <article class="journal-entry fade-in">
+                        <div class="entry-date">
+                            <div class="entry-day">12</div>
+                            <div class="entry-month">Jun 2026</div>
+                        </div>
+                        <div class="entry-content">
+                            <h3>I Finally Asked for Help</h3>
+                            <p>After years of pretending everything was fine, I reached out to a brother at 2 AM. What happened next changed everything.</p>
+                        </div>
+                        <div class="entry-category">Mindset</div>
+                    </article>
+                    <article class="journal-entry fade-in">
+                        <div class="entry-date">
+                            <div class="entry-day">08</div>
+                            <div class="entry-month">Jun 2026</div>
+                        </div>
+                        <div class="entry-content">
+                            <h3>365 Days of Showing Up</h3>
+                            <p>One year ago I couldn't run a mile. Today I finished my first marathon. Here's what I learned about consistency.</p>
+                        </div>
+                        <div class="entry-category">Fitness</div>
+                    </article>
+                    <article class="journal-entry fade-in">
+                        <div class="entry-date">
+                            <div class="entry-day">02</div>
+                            <div class="entry-month">Jun 2026</div>
+                        </div>
+                        <div class="entry-content">
+                            <h3>My Business Failed. Then I Found My Brothers.</h3>
+                            <p>I lost everything—the company, my savings, my confidence. How the brotherhood helped me rebuild from zero.</p>
+                        </div>
+                        <div class="entry-category">Business</div>
+                    </article>
+                    <article class="journal-entry fade-in">
+                        <div class="entry-date">
+                            <div class="entry-day">28</div>
+                            <div class="entry-month">May 2026</div>
+                        </div>
+                        <div class="entry-content">
+                            <h3>Breaking the Cycle: Being the Father I Never Had</h3>
+                            <p>My dad wasn't there. For years, I was terrified I'd repeat the pattern. This is how I'm doing it differently.</p>
+                        </div>
+                        <div class="entry-category">Fatherhood</div>
+                    </article>
+                    <article class="journal-entry fade-in">
+                        <div class="entry-date">
+                            <div class="entry-day">21</div>
+                            <div class="entry-month">May 2026</div>
+                        </div>
+                        <div class="entry-content">
+                            <h3>From Debt to Freedom in 18 Months</h3>
+                            <p>$47,000 in debt. No plan. No hope. How accountability and brotherhood helped me take control.</p>
+                        </div>
+                        <div class="entry-category">Finance</div>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- SHOP PAGE -->
+    <div class="page" id="shop">
+        <div class="page-header">
+            <div class="container">
+                <p class="section-label">The Shop</p>
+                <h1 class="section-title serif">Wear the mission.</h1>
+                <p class="section-subtitle">Premium essentials for men who show up. Every purchase supports the brotherhood.</p>
+            </div>
+        </div>
+
+        <section class="section">
+            <div class="container">
+                <div class="shop-filters fade-in">
+                    <button class="filter-btn active">All</button>
+                    <button class="filter-btn">Tees</button>
+                    <button class="filter-btn">Hoodies</button>
+                    <button class="filter-btn">Accessories</button>
+                    <button class="filter-btn">Limited</button>
+                </div>
+                <div class="shop-grid">
+                    <div class="product-card fade-in">
+                        <div class="product-image"></div>
+                        <div class="product-info">
+                            <h3 class="product-name">Brotherhood Tee — Black</h3>
+                            <p class="product-price">$45</p>
+                        </div>
+                    </div>
+                    <div class="product-card fade-in">
+                        <div class="product-image"></div>
+                        <div class="product-info">
+                            <h3 class="product-name">Brotherhood Tee — White</h3>
+                            <p class="product-price">$45</p>
+                        </div>
+                    </div>
+                    <div class="product-card fade-in">
+                        <div class="product-image"></div>
+                        <div class="product-info">
+                            <h3 class="product-name">Built on Support Hoodie</h3>
+                            <p class="product-price">$85</p>
+                        </div>
+                    </div>
+                    <div class="product-card fade-in">
+                        <div class="product-image"></div>
+                        <div class="product-info">
+                            <h3 class="product-name">Show Up Cap</h3>
+                            <p class="product-price">$35</p>
+                        </div>
+                    </div>
+                    <div class="product-card fade-in">
+                        <div class="product-image"></div>
+                        <div class="product-info">
+                            <h3 class="product-name">Accountability Journal</h3>
+                            <p class="product-price">$28</p>
+                        </div>
+                    </div>
+                    <div class="product-card fade-in">
+                        <div class="product-image"></div>
+                        <div class="product-info">
+                            <h3 class="product-name">B2B Long Sleeve</h3>
+                            <p class="product-price">$55</p>
+                        </div>
+                    </div>
+                    <div class="product-card fade-in">
+                        <div class="product-image"></div>
+                        <div class="product-info">
+                            <h3 class="product-name">Founding Member Hoodie</h3>
+                            <p class="product-price">$120</p>
+                        </div>
+                    </div>
+                    <div class="product-card fade-in">
+                        <div class="product-image"></div>
+                        <div class="product-info">
+                            <h3 class="product-name">Brotherhood Beanie</h3>
+                            <p class="product-price">$30</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- CONTACT PAGE -->
+    <div class="page" id="contact">
+        <div class="page-header">
+            <div class="container">
+                <p class="section-label">Contact</p>
+                <h1 class="section-title serif">Let's connect.</h1>
+                <p class="section-subtitle">Questions, partnerships, or just want to share your story. We're listening.</p>
+            </div>
+        </div>
+
+        <section class="section">
+            <div class="container">
+                <div class="contact-grid">
+                    <div class="contact-info fade-in">
+                        <h3>Get in touch</h3>
+                        <p>Whether you're interested in joining the brotherhood, partnering with us, or just want to share your journey—we want to hear from you.</p>
+                        <div class="contact-details">
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <svg xmlns="[w3.org](http://www.w3.org/2000/svg)" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                                    </svg>
+                                </div>
+                                <div class="contact-text">hello@bro2bro.com</div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <svg xmlns="[w3.org](http://www.w3.org/2000/svg)" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                                    </svg>
+                                </div>
+                                <div class="contact-text">Los Angeles, California</div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <svg xmlns="[w3.org](http://www.w3.org/2000/svg)" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <div class="contact-text">Response within 24 hours</div>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="contact-form fade-in">
+                        <div class="form-group">
+                            <label class="form-label">Name</label>
+                            <input type="text" class="form-input" placeholder="Your name" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-input" placeholder="your@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Subject</label>
+                            <input type="text" class="form-input" placeholder="What's this about?" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Message</label>
+                            <textarea class="form-textarea" placeholder="Tell us what's on your mind..." required></textarea>
+                        </div>
+                        <button type="submit" class="form-submit">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="logo" data-page="home">Bro 2 Bro</a>
+                    <p class="footer-tagline">Built on Support.<br>For the Ones Who Show Up.</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Navigate</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" data-page="home">Home</a></li>
+                        <li><a href="#" data-page="mission">Mission</a></li>
+                        <li><a href="#" data-page="community">Community</a></li>
+                        <li><a href="#" data-page="journal">Journal</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Shop</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" data-page="shop">All Products</a></li>
+                        <li><a href="#" data-page="shop">Tees</a></li>
+                        <li><a href="#" data-page="shop">Hoodies</a></li>
+                        <li><a href="#" data-page="shop">Accessories</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Connect</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" data-page="contact">Contact</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2026 Bro 2 Bro. All rights reserved.</p>
+                <div class="footer-social">
+                    <a href="#" aria-label="Instagram">
+                        <svg xmlns="[w3.org](http://www.w3.org/2000/svg)" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="Twitter">
+                        <svg xmlns="[w3.org](http://www.w3.org/2000/svg)" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="YouTube">
+                        <svg xmlns="[w3.org](http://www.w3.org/2000/svg)" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+                            <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation scroll effect
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile navigation
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mobileNav = document.getElementById('mobileNav');
+        
+        mobileToggle.addEventListener('click', () => {
+            mobileNav.classList.toggle('active');
+            document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+        });
+
+        // Page navigation
+        const pages = document.querySelectorAll('.page');
+        const navLinks = document.querySelectorAll('[data-page]');
+
+        function showPage(pageId) {
+            // Hide all pages
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Show selected page
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+
+            // Update nav links
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.page === pageId) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Close mobile nav
+            mobileNav.classList.remove('active');
+            document.body.style.overflow = '';
+
+            // Scroll to top
+            window.scrollTo(0, 0);
+
+            // Re-trigger fade in animations
+            setTimeout(() => {
+                document.querySelectorAll('.page.active .fade-in').forEach(el => {
+                    el.classList.remove('visible');
+                    setTimeout(() => {
+                        if (isElementInViewport(el)) {
+                            el.classList.add('visible');
+                        }
+                    }, 100);
+                });
+            }, 100);
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const pageId = link.dataset.page;
+                showPage(pageId);
+            });
+        });
+
+        // Fade in on scroll
+        function isElementInViewport(el) {
+            const rect = el.getBoundingClientRect();
+            return rect.top <= window.innerHeight * 0.85;
+        }
+
+        function handleScroll() {
+            const fadeElements = document.querySelectorAll('.page.active .fade-in');
+            fadeElements.forEach(el => {
+                if (isElementInViewport(el)) {
+                    el.classList.add('visible');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('load', handleScroll);
+
+        // Shop filter buttons
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+
+        // Form submissions
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('Thank you! Your submission has been received.');
+                form.reset();
+            });
+        });
+    </script>
+</body>
+</html>
